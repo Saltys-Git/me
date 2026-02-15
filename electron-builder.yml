@@ -1,0 +1,27 @@
+appId: com.men.agent
+productName: MEN Agent
+copyright: Copyright © 2026 Techy's
+target: NSIS
+files:
+  - dist/**
+  - assets/**
+mac:
+  target: dmg
+  icon: assets/icon.icns
+  extendInfo:
+    NSScreenCaptureUsageDescription: "MEN Agent needs screen access"
+win:
+  target: nsis
+  icon: assets/icon.ico
+linux:
+  target:
+    - AppImage
+    - deb
+  icon: assets/icon.png
+nsis:
+  allowToChangeInstallationDirectory: true
+  oneClick: false
+  runAfterFinish: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+publish: null

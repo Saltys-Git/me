@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Glass Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            border-color: #e5e7eb;
+            outline-color: rgba(217, 119, 6, 0.5);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            background-color: transparent;
+            color: transparent;
+            min-height: 100vh;
+        }
+
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(1.05);
+            }
+        }
+
+        .glass-card {
+            position: relative;
+            max-width: 400px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 1rem;
+            padding: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+
+        .card-header {
+            padding: 2rem 2rem 1.5rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .window-controls {
+            position: absolute;
+            width: 22rem;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: end;
+            cursor: move;
+        }
+
+        .window-btn {
+            width: 2rem;
+            height: 2rem;
+            border: none;
+            border-radius: 0.375rem;
+            background: rgba(255, 255, 255, 0.3);
+            color: #6b7280;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-weight: 700;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .window-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .window-btn:active {
+            transform: scale(0.95);
+        }
+
+        .window-btn.close:hover {
+            background: rgba(239, 68, 68, 0.6);
+            color: #fff;
+        }
+
+        .window-btn.minimize:hover {
+            background: rgba(81, 80, 80, 0.6);
+            color: #fff;
+        }
+
+        .card-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            margin-top: 2rem;
+            user-select: none;
+        }
+
+        .card-description {
+            font-size: 0.875rem;
+            color: rgba(55, 65, 81, 0.7);
+            user-select: none;
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            user-select: none;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        input {
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            color: #374151;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        input::placeholder {
+            color: rgba(55, 65, 81, 0.5);
+        }
+
+        input:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: rgba(96, 165, 250, 1);
+            border-color: rgba(96, 165, 250, 1);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn {
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: #0C115B;
+            color: white;
+            padding: 1.25rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            background: transparent;
+            color: #374151;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .divider {
+            position: relative;
+            text-align: center;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(55, 65, 81, 0.2);
+        }
+
+        .divider span {
+            position: relative;
+            padding: 0 0.5rem;
+            background: rgba(255, 255, 255, 0.25);
+            color: rgba(55, 65, 81, 0.6);
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .svg-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .forgot-password {
+            text-align: center;
+        }
+
+        .forgot-password a {
+            font-size: 0.875rem;
+            color: rgba(55, 65, 81, 0.7);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-password a:hover {
+            color: #374151;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        .app-region {
+            -webkit-app-region: drag;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .btn-region {
+            -webkit-app-region: no-drag;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glass-card">
+        <div class="card-header">
+            <div class="window-controls app-region">
+                <button class="window-btn minimize btn-region" id="minimizeBtn" title="Minimize">
+                    −
+                </button>
+                <button class="window-btn close btn-region" id="closeBtn" title="Close">
+                    ✕
+                </button>
+            </div>
+            <h1 class="card-title">MEN Agent</h1>
+            <p class="card-description">Connect to your account to continue</p>
+        </div>
+
+        <div class="card-content" style="padding: 0 2rem 2rem 2rem;">
+            <form id="loginForm" class="form-group">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input id="email" type="email" placeholder="Enter your work email" required />
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    Connect
+                </button>
+            </form>
+            <div class="error" id="error"></div>
+        </div>
+    </div>
+
+<script>
+    const loginForm = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const emailInput = document.getElementById('email');
+    const minimizeBtn = document.getElementById('minimizeBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const glassCard = document.querySelector('.glass-card');
+
+    // Handle minimize button
+    minimizeBtn.addEventListener('click', () => {
+        window.MEN.minimize()
+    });
+
+    // Handle close button
+    closeBtn.addEventListener('click', () => {
+        window.MEN.quit()
+    });
+
+    // Handle login form submission
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = emailInput.value;
+
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.innerHTML = '<span class="loading"></span>Working...';
+
+        //login process
+        try {
+            await window.MEN.login(email)
+        } catch (e) {
+            document.getElementById('error').innerText = 'Login failed'
+        }
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+
+        // Reset form
+        loginForm.reset();
+    });
+
+</script>
+</body>
+
+</html>

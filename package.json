@@ -1,0 +1,59 @@
+{
+  "name": "men-agent",
+  "productName": "MEN Agent",
+  "author": "Monitorr",
+  "description": "An Electron.js desktop agent (system tray app) for our employee monitoring platform MonitorR",
+  "version": "2.4.1",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "tsc && xcopy src\\auth\\login.html dist\\auth\\ /Y && xcopy src\\streaming\\stream.html dist\\streaming\\ /Y && xcopy src\\capture\\record.html dist\\capture\\ /Y && electron .",
+    "build": "tsc && xcopy src\\auth\\login.html dist\\auth\\ /Y && xcopy src\\streaming\\stream.html dist\\streaming\\ /Y && xcopy src\\capture\\record.html dist\\capture\\ /Y && electron-builder",
+    "build:win": "tsc && xcopy src\\auth\\login.html dist\\auth\\ /Y && xcopy src\\streaming\\stream.html dist\\streaming\\ /Y && xcopy src\\capture\\record.html dist\\capture\\ /Y && electron-builder --win",
+    "build:mac": "tsc && xcopy src\\auth\\login.html dist\\auth\\ /Y && xcopy src\\streaming\\stream.html dist\\streaming\\ /Y && xcopy src\\capture\\record.html dist\\capture\\ /Y && electron-builder --mac",
+    "build:linux": "tsc && xcopy src\\auth\\login.html dist\\auth\\ /Y && xcopy src\\streaming\\stream.html dist\\streaming\\ /Y && xcopy src\\capture\\record.html dist\\capture\\ /Y && electron-builder --linux"
+  },
+  "build": {
+    "appId": "com.monitorr.agent",
+    "productName": "MEN Agent",
+    "files": [
+      "dist/**/*",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": [
+      ],
+      "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "installerIcon": "assets/icon.ico",
+      "artifactName": "MEN-${version}.${ext}",
+      "include": "config.nsh"
+    }
+  },
+  "devDependencies": {
+    "@types/auto-launch": "^5.0.5",
+    "@types/node": "^25.2.3",
+    "electron": "^40.2.1",
+    "electron-builder": "^26.7.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "active-win": "^9.0.0",
+    "auto-launch": "^5.0.6",
+    "electron-store": "^8.2.0",
+    "node-fetch": "^3.3.2"
+  }
+}
