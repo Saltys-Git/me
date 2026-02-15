@@ -3,8 +3,6 @@ name: Build Electron App
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   build-linux:
@@ -16,16 +14,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # or your project Node version
+          node-version: '20'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
       - name: Build Linux App
-        run: npm run build
+        run: npm run build:linux
 
-      - name: Upload Artifacts
+      - name: Upload Linux Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: linux-build
-          path: dist/
+          path: dist/**
