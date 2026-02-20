@@ -17,6 +17,15 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Remove old dist
+        run: |
+              echo "Deleting old dist folder..."
+              rm -rf $GITHUB_WORKSPACE/dist
+              mkdir -p $GITHUB_WORKSPACE/dist
+
+      - name: Check dist folder after cleanup
+        run: ls -alh $GITHUB_WORKSPACE/dist || echo "dist is empty"
+
       - name: Install Dependencies
         run: npm ci
 
