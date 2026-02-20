@@ -21,6 +21,8 @@ jobs:
         run: npm ci
 
       - run: rm -rf ~/.cache/electron-builder
+      - name: Remove old dist folder
+        run: rm -rf dist
       
       - name: Build Linux App
         run: npm run build:linux
