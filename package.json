@@ -10,7 +10,7 @@
     "build": "tsc && xcopy src\\auth\\login.html dist\\auth\\ /Y && xcopy src\\streaming\\stream.html dist\\streaming\\ /Y && xcopy src\\capture\\record.html dist\\capture\\ /Y && electron-builder",
     "build:win": "tsc && xcopy src\\auth\\login.html dist\\auth\\ /Y && xcopy src\\streaming\\stream.html dist\\streaming\\ /Y && xcopy src\\capture\\record.html dist\\capture\\ /Y && electron-builder --win",
     "build:mac": "tsc && xcopy src\\auth\\login.html dist\\auth\\ /Y && xcopy src\\streaming\\stream.html dist\\streaming\\ /Y && xcopy src\\capture\\record.html dist\\capture\\ /Y && electron-builder --mac",
-    "build:linux": "rm -rf dist || true && tsc && cp src/auth/login.html dist/auth/ && cp src/streaming/stream.html dist/streaming/ && cp src/capture/record.html dist/capture/ && electron-builder --linux --publish=never --dir"
+    "build:linux": "rm -rf dist || true && tsc && cp src/auth/login.html dist/auth/ && cp src/streaming/stream.html dist/streaming/ && cp src/capture/record.html dist/capture/ && electron-builder --linux --publish=never"
   },
   "build": {
     "asar": true,
