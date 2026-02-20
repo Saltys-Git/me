@@ -20,11 +20,15 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - run: rm -rf ~/.cache/electron-builder
-      - name: Remove old dist folder
+      - name: Remove old dist
         run: rm -rf dist
-      
-      - name: Build Linux App
+
+      - name: Clean electron-builder workspace cache
+        run: rm -rf ${{ github.workspace }}/.cache
+
+      - name: Build project
+        env:
+          ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache
         run: npm run build:linux
         
       - name: Upload Linux Installer
