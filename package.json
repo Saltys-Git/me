@@ -37,8 +37,6 @@
       "target": [
         "deb"
       ],
-      "arch": ["x64"],
-      "category": "Utility",
       "icon": "assets/icon.png"
     },
     "nsis": {
