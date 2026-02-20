@@ -30,9 +30,12 @@ jobs:
         env:
           ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache
         run: npm run build:linux
-        
+
       - name: Upload Linux Installer
         uses: actions/upload-artifact@v4
         with:
           name: linux-installer
           path: dist/**
+
+      - name: Inspect linux-unpacked size
+        run: du -sh dist/linux-unpacked/resources/app/node_modules/*
