@@ -5,6 +5,7 @@
   "description": "An Electron.js desktop agent (system tray app) for our employee monitoring platform MonitorR",
   "version": "2.4.1",
   "main": "dist/main.js",
+  "author": "Saidur Rahman Siam <contact@yoursaltydev.space>",
   "scripts": {
     "dev": "tsc && xcopy src\\auth\\login.html dist\\auth\\ /Y && xcopy src\\streaming\\stream.html dist\\streaming\\ /Y && xcopy src\\capture\\record.html dist\\capture\\ /Y && electron .",
     "build": "tsc && xcopy src\\auth\\login.html dist\\auth\\ /Y && xcopy src\\streaming\\stream.html dist\\streaming\\ /Y && xcopy src\\capture\\record.html dist\\capture\\ /Y && electron-builder",
@@ -34,7 +35,9 @@
     },
     "linux": {
       "target": [
-        "deb"
+        "deb",
+        "arch": ["x64"],
+        "category": "Utility"
       ],
       "icon": "assets/icon.png"
     },
