@@ -22,3 +22,9 @@ jobs:
 
       - name: Build Linux App
         run: npm run build:linux
+        
+      - name: Upload Linux Installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-installer
+          path: dist/**
