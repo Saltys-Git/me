@@ -14,7 +14,6 @@
   },
   "build": {
     "asar": true,
-    "prune": true,
     "appId": "com.monitorr.agent",
     "productName": "MEN Agent",
     "files": [
@@ -35,6 +34,7 @@
     },
     "linux": {
       "target": [
+        "AppImage"
       ],
       "icon": "assets/icon.png"
     },
