@@ -13,6 +13,8 @@
     "build:linux": "rm -rf dist || true && tsc && cp src/auth/login.html dist/auth/ && cp src/streaming/stream.html dist/streaming/ && cp src/capture/record.html dist/capture/ && electron-builder --linux --publish=never --dir"
   },
   "build": {
+    "asar": true,
+    "prune": true,
     "appId": "com.monitorr.agent",
     "productName": "MEN Agent",
     "files": [
