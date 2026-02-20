@@ -45,6 +45,3 @@ jobs:
         with:
           name: linux-installer
           path: dist/**
-
-      - name: Inspect linux-unpacked size
-        run: du -sh dist/linux-unpacked/resources/app/node_modules/*
