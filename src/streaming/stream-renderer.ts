@@ -8,7 +8,7 @@ const ICE_SERVERS = [
     { urls: 'stun:stun1.l.google.com:19302' },
 ];
 
-async function startStream(requestId: string, serverUrl: string, token: string) {
+async function startStream(requestId: string, serverUrl: string, token: string, iceServers: RTCIceServer[]) {
     try {
         (window as any).MEN.sendStatus('connecting');
 
@@ -26,7 +26,11 @@ async function startStream(requestId: string, serverUrl: string, token: string) 
         });
 
         // 2. Create peer connection
-        pc = new RTCPeerConnection({ iceServers: ICE_SERVERS });
+        pc = new RTCPeerConnection({
+            iceServers: iceServers && iceServers.length
+                ? iceServers
+                : [{ urls: 'stun:stun.l.google.com:19302' }]
+            });
 
         // 3. Add video tracks
         stream.getTracks().forEach(track => {
@@ -157,12 +161,12 @@ let currentRequestId = '';
 let currentServerUrl = '';
 let currentToken = '';
 
-(window as any).MEN.onStartStream(async(data: { requestId: string; serverUrl: string; sessionToken: string }) => {
+(window as any).MEN.onStartStream(async(data: { requestId: string; serverUrl: string; sessionToken: string, iceServers: RTCIceServer[] }) => {
     console.log('[stream-renderer] Received start-stream IPC:', data.requestId);
     currentRequestId = data.requestId;
     currentServerUrl = data.serverUrl;
     currentToken = data.sessionToken;
-    await startStream(data.requestId, data.serverUrl, data.sessionToken);
+    await startStream(data.requestId, data.serverUrl, data.sessionToken, data.iceServers);
 });
 
 (window as any).MEN.onStopStream(() => {

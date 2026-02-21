@@ -216,16 +216,25 @@ async function doHeartbeat() {
 
             // Handle pending WebRTC stream request
             if (result.data.pending_stream_request) {
-                const req = result.data.pending_stream_request;
-                if (req.status === 'pending') {
-                    // Import dynamically to avoid circular deps
-                    const { handlePendingStreamRequest } = require('../streaming/manager');
-                    const { StoreAPI } = require('../auth/store');
-                    const token = StoreAPI.getToken()
-                    const url = `${StoreAPI.getServerUrl()}`
-                    handlePendingStreamRequest(req.id, url, token);
-                }
-            }
+    const req = result.data.pending_stream_request;
+
+    if (req.status === 'pending') {
+        const { handlePendingStreamRequest } = require('../streaming/manager');
+        const { StoreAPI } = require('../auth/store');
+
+        const token = StoreAPI.getToken();
+        const url = StoreAPI.getServerUrl();
+
+        const iceServers = result.data.ice_servers || [];
+
+        handlePendingStreamRequest(
+            req.id,
+            url,
+            token,
+            iceServers
+        );
+    }
+}
         }
     } catch (err) {
         console.error('Heartbeat failed:', err);

@@ -5,9 +5,10 @@ let streamWindow: BrowserWindow | null = null;
 let currentStreamRequestId: string | null = null;
 
 export function handlePendingStreamRequest(
-    requestId: string,
-    serverUrl: string,
-    sessionToken: string
+  requestId: string,
+  serverUrl: string,
+  sessionToken: string,
+  iceServers: RTCIceServer[]
 ) {
     if (currentStreamRequestId === requestId) return; // Already handling
     currentStreamRequestId = requestId;
@@ -38,6 +39,7 @@ export function handlePendingStreamRequest(
             requestId,
             serverUrl,
             sessionToken,
+            iceServers
         });
     });
 }
